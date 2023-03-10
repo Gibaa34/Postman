@@ -10,6 +10,11 @@ pool:
   name: 'ubuntu-agent'
   vmImage: ubuntu-latest
 
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'C:\Users\PlamenManolov\Desktop\PostmanCollection'
+
 steps:
 - script: newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlextra
   displayName: 'desk device apis'
