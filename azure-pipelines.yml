@@ -11,8 +11,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlextra
+  displayName: 'desk device apis'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
