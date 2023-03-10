@@ -1,0 +1,493 @@
+{
+	"info": {
+		"_postman_id": "ec64caaa-e964-4427-84de-09ad15b356a2",
+		"name": "MobileDevice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13136386"
+	},
+	"item": [
+		{
+			"name": "Authenticate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"bearer-token\", jsonData[\"token\"]);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n  \"mobileApp\": \"Plamen\",\r\n  \"Keyword\": \"TRACE\",\r\n  \"License\": \"66aa6cf5-44b1-4e6d-a49b-7fb208c90560\" \r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/auth/tokens",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"tokens"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Health",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/health",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//parsing the Response body to a variable\r",
+							"    responseJson = JSON.parse(responseBody);\r",
+							"//Finding the length of the Response Array\r",
+							"    var list = responseJson.length;\r",
+							"    console.log(list);\r",
+							"  \r",
+							"let jsonData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response is json\", function () {\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"    pm.expect(pm.response.to.be.json);\r",
+							"});\r",
+							"\r",
+							"pm.test('The `product_id` property is in each record' , () => {\r",
+							"    _.each(jsonData, (item) => {\r",
+							"        pm.expect(item, 'Does not have the property').to.have.property(\"product_id\");\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/products",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ProductsByID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"console.log(jsonData)\r",
+							"\r",
+							"pm.test(\"display_name is returned\", function () {\r",
+							"    pm.expect(jsonData).to.have.property(\"display_name\");\r",
+							"    pm.expect(pm.response.text()).to.contains(\"display_name\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/products/{{prod_id}}",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"products",
+						"{{prod_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MobileAppMetadata",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/products/{{prod_id}}/processor-metadata",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"products",
+						"{{prod_id}}",
+						"processor-metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ImageVerifications",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "dev/172/Image 2.png"
+						},
+						{
+							"key": "prod_id",
+							"value": "{{prod_id}}",
+							"type": "text"
+						},
+						{
+							"key": "customid",
+							"value": "7",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/image-processing/verifications",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"image-processing",
+						"verifications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DevImages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "dev/172/Image 3.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/image-processing/dev-images",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"image-processing",
+						"dev-images"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AuthApp",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "uuid",
+							"value": "Plamen",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/auth/registrations",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"auth",
+						"registrations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CmsFaq",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/cms/faq",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"cms",
+						"faq"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DataProtectionNotice",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/cms/data-protection-notice",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"cms",
+						"data-protection-notice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TermsAndConditions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{BaseURL}}/v1/cms/terms-and-conditions",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"cms",
+						"terms-and-conditions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Imprint",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearer-token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseURL}}/v1/cms/imprint",
+					"host": [
+						"{{BaseURL}}"
+					],
+					"path": [
+						"v1",
+						"cms",
+						"imprint"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	]
+}
