@@ -26,7 +26,7 @@ steps:
 - task: CmdLine@2
   displayName: 'DeskDevice'
   inputs:
-    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
+    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlreporter --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     failOnStderr: true
 
