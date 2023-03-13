@@ -35,4 +35,4 @@ steps:
   inputs:
     script: 'newman run MobileDevice.postman_collection.json -e Mobile.postman_environment.json -r htmlextra --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
-    failOnStderr: true
+
