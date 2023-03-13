@@ -12,18 +12,27 @@ pool:
 
 steps:
 - task: CmdLine@2
+  displayName: 'Install Newman'
   inputs:
     script: 'npm install -g newman'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 - task: CmdLine@2
+  displayName: 'Install HTML reporter'
   inputs:
     script: 'npm install -g newman-reporter-htmlextra'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-
 - task: CmdLine@2
+  displayName: 'DeskDevice'
   inputs:
     script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml -r htmlextra'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+    failOnStderr: true
+
+- task: CmdLine@2
+  displayName: 
+  inputs:
+    script: 'newman run MobileDevice.postman_collection.json -e Mobile.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml -r htmlextra'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     failOnStderr: true
