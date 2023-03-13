@@ -26,13 +26,13 @@ steps:
 - task: CmdLine@2
   displayName: 'DeskDevice'
   inputs:
-    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml -r htmlextra'
+    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     failOnStderr: true
 
 - task: CmdLine@2
   displayName: 
   inputs:
-    script: 'newman run MobileDevice.postman_collection.json -e Mobile.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml -r htmlextra'
+    script: 'newman run MobileDevice.postman_collection.json -e Mobile.postman_environment.json -r htmlextra --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     failOnStderr: true
