@@ -18,11 +18,6 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'npm install -g newman-reporter-htmlextra'
-    workingDirectory: '$(System.DefaultWorkingDirectory)'
-
-- task: CmdLine@2
-  inputs:
-    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlextra'
+    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json --reporters cli,junit --reporter-junit-export Results\junitReport.xml'
     workingDirectory: '$(System.DefaultWorkingDirectory)'
     failOnStderr: true
