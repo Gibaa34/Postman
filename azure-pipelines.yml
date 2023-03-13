@@ -11,13 +11,18 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Npm@1
+- task: CmdLine@2
   inputs:
-    command: 'install'
-- script: newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlextra
-  displayName: 'desk device apis'
+    script: 'npm install -g newman'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: CmdLine@2
+  inputs:
+    script: 'npm install -g newman-reporter-htmlextra'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- task: CmdLine@2
+  inputs:
+    script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlextra'
+    workingDirectory: 'Gibaa34 / Postman'
+    failOnStderr: true
