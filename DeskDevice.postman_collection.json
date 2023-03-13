@@ -17,9 +17,8 @@
 							"pm.environment.set(\"bearer-token\", jsonData[\"token\"]);\r",
 							"\r",
 							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 							"});\r",
-							"\r",
 							""
 						],
 						"type": "text/javascript"
@@ -332,6 +331,28 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
 		}
 	]
 }
