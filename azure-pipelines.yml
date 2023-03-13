@@ -24,5 +24,5 @@ steps:
 - task: CmdLine@2
   inputs:
     script: 'newman run DeskDevice.postman_collection.json -e Desk.postman_environment.json -r htmlextra'
-    workingDirectory: 'Gibaa34/Postman'
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
     failOnStderr: true
